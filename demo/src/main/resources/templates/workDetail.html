@@ -148,13 +148,16 @@
 			
 			<div>
 				<a th:href="@{/project/work/completion/change/{id}(id=${workDto.workId})}">
-					<button class="edit-btn" th:if="${auth && workDto.completion == 0}">완료로 표시</button>
+					<button class="edit-btn" th:if="${auth == 1 && workDto.completion == 0}">완료로 표시</button>
 				</a>
 				<a th:href="@{/project/work/completion/change/{id}(id=${workDto.workId})}">
-					<button class="edit-btn" th:if="${auth && workDto.completion == 1}">진행중으로 표시</button>
+					<button class="edit-btn" th:if="${auth == 1 && workDto.completion == 1}">진행중으로 표시</button>
 				</a>
 				<a th:href="@{/project/goal/work/edit/{id}(id=${workDto.workId})}">
-					<button class="edit-btn" th:if="${auth}">작업 수정</button>
+					<button class="edit-btn" th:if="${auth == 1}">작업 수정</button>
+				</a>
+				<a th:href="@{/project/goal/work/delete/{id}(id=${workDto.workId})}">
+					<button class="delete-btn" th:if="${auth == 1}" >작업 삭제</button>
 				</a>
 			</div>
 		</div>

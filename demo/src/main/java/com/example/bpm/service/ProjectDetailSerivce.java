@@ -409,6 +409,14 @@ public class ProjectDetailSerivce {
 
     /* - - - - 삭제 메서드 시작 - - - - - */
     @Transactional
+    public void deleteProject(ProjectDto projectDto) {
+        List<HeadDto> headDtoList = selectAllHead(projectDto);
+        for (HeadDto headDto : headDtoList) {
+            deleteHeadEntity(headDto.getHeadId());
+        }
+    }
+
+    @Transactional
     public void deleteHeadEntity(Long headId) {
         //head
         HeadDto targetHeadDto = HeadDto.toHeadDto(headRepository.findById(headId).orElse(null));
@@ -558,8 +566,44 @@ public class ProjectDetailSerivce {
         log.info("detail 삭제 완료");
     }
 
+    @Transactional
+    public void deleteWorkEntity(Long workId) {
+        // work
+        WorkDto workDto = selectWork(workId);
+
+        List<UserWorkDto> userWorkDtoList = selectAllUserWorkForWork(workId);
+        List<WorkCommentDto> workCommentDtoList = selectAllWorkCommentForWork(workDto);
+        List<WorkDocumentDto> workDocumentDtoList = selectAllWorkDocumentForWork(workDto);
+        List<DocumentDto> documentDtoList = new ArrayList<>();
+        for (WorkDocumentDto workDocumentDto : workDocumentDtoList) {
+            DocumentDto documentDto = new DocumentDto();
+            documentDto.insertEntity(workDocumentDto.getDocumentIdToWorkDocument());
+            documentDtoList.add(documentDto);
+        }
+
+        for (DocumentDto documentDto : documentDtoList) {
+            deleteLogForDocument(documentDto);
+            log.info("log 삭제 완료");
+            deleteBlockForDocument(documentDto);
+            log.info("block 삭제 완료");
+        }
+        deleteWorkDocumentList(workDocumentDtoList);
+        log.info("workDocument 삭제 완료");
+        deleteDocumentList(documentDtoList);
+        log.info("document 삭제 완료");
+        deleteAllWorkCommentForWorkId(workId);
+        log.info("WorkComment 삭제 완료");
+        deleteAllUserWorkForWork(workId);
+        log.info("userWork 삭제 완료");
+        deleteWork(workId);
+        log.info("work 삭제 완료");
+    }
+
     public void deleteDetail(DetailDto detailDto) {
         detailRepository.deleteByDetailId(detailDto.getDetailId());
+    }
+    public void deleteWork(Long workId) {
+        workRepository.deleteAllByWorkId(workId);
     }
 
 
@@ -583,6 +627,10 @@ public class ProjectDetailSerivce {
 
     public void deleteAllUserWorkForWork(Long workId) {
         userWorkRepository.deleteAllByWorkIdToUserWork_WorkId(workId);
+    }
+
+    public void deleteAllWorkCommentForWorkId(Long workId) {
+        workCommentRepository.deleteAllByWorkIdToComment_WorkId(workId);
     }
 
     public void deleteWorkDocumentList(List<WorkDocumentDto> workDocumentDtoList) {

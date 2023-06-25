@@ -106,7 +106,6 @@
 			</div>
 			<div class="select">
 				<select class="select-connection-goal" id="headId" name="headId" th:if="${headDtoList != null}">
-					<option th:value="0">없음</option>
 					<option th:each="headDto : ${headDtoList}"
 					th:text="${headDto.title}"
 					th:value="${headDto.headId}"></option>

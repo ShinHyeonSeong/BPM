@@ -388,13 +388,7 @@ public class ProjectDetailController {
             model.addAttribute("CommentList", commentDtoList);
         }
         Long auth = getSessionAuth();
-        if (auth == 1 || auth == 0) {
-            model.addAttribute("auth", true);
-            log.info("권한 true 설정");
-        } else {
-            model.addAttribute("auth", false);
-            log.info("권한 false 설정");
-        }
+        model.addAttribute("auth", auth);
         model.addAttribute("workDto", workDto);
         model.addAttribute("userWorkDtoList", userWorkDtoList);
         model.addAttribute("DocumentList", documentDtoList);
@@ -413,6 +407,12 @@ public class ProjectDetailController {
     public String deleteDetail(@PathVariable("id") Long detailId) {
         projectDetailSerivce.deleteDetailEntity(detailId);
         return "redirect:/project/goals";
+    }
+
+    @RequestMapping("/project/goal/work/delete/{id}")
+    public String deleteWork(@PathVariable("id") Long workId) {
+        projectDetailSerivce.deleteWorkEntity(workId);
+        return "redirect:/project/works";
     }
 
 
