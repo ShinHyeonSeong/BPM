@@ -1,6 +1,5 @@
 package com.example.bpm.service;
 
-import com.example.bpm.dto.DetailDto;
 import com.example.bpm.dto.HeadDto;
 import com.example.bpm.dto.ProjectDto;
 import com.example.bpm.entity.DetailEntity;
@@ -133,7 +132,6 @@ public class ExceptionService {
         }
         return null;
     }
-
     public String workEditErrorCheck(String startDate, String endDate, Long detailId) {
         DetailDto detailDto = DetailDto.toDetailDto((detailRepository.findById(detailId)).orElse(null));
 

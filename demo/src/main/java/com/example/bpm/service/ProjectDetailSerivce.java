@@ -102,7 +102,7 @@ public class ProjectDetailSerivce {
         }
     }
 
-    // 내 작업 만들기
+    //내 작업 만들기
     public WorkDto createWork(String title, String discription, String startDate, String deadline,
                               DetailDto connectDetail, ProjectDto projectDto) {
         if (workRepository.findByTitle(title).isPresent()) {
@@ -127,15 +127,12 @@ public class ProjectDetailSerivce {
     }
 
     //유저 작업 테이블 추가 메서드
-    public void addUserWork(WorkDto workDto, List<String> chargeUsers) {
+    public void addUserWork(WorkDto workDto, UserDto userDto) {
         log.info("user_work table insert method");
         WorkEntity workEntity = WorkEntity.toWorkEntity(workDto);
-        UserWorkEntity userWorkEntity = new UserWorkEntity();
-        for (String uuid : chargeUsers) {
-            Optional<UserEntity> userEntity = userRepository.findById(uuid);
-            userWorkEntity = UserWorkEntity.toUserWorkEntity(workEntity, userEntity.get());
-            userWorkRepository.save(userWorkEntity);
-        }
+        UserEntity userEntity = UserEntity.toUserEntity(userDto);
+        UserWorkEntity userWorkEntity = UserWorkEntity.toUserWorkEntity(workEntity, userEntity);
+        userWorkRepository.save(userWorkEntity);
     }
 
     /* - - - - 생성 메서드 끝 - - - - */
@@ -217,15 +214,6 @@ public class ProjectDetailSerivce {
         UserWorkEntity userWorkEntity = userWorkRepository.findByWorkIdToUserWork_WorkId(workDto.getWorkId());
         Optional<UserEntity> userEntity = userRepository.findById(userWorkEntity.getUserIdToUserWork().getUuid());
         return UserDto.toUserDto(userEntity.get());
-    }
-
-    public List<UserWorkDto> selectAllUserWorkForWork(Long workId) {
-        List<UserWorkEntity> userWorkEntityList = userWorkRepository.findAllByWorkIdToUserWork_WorkId(workId);
-        List<UserWorkDto> userWorkDtoList = new ArrayList<>();
-        for (UserWorkEntity userWorkEntity : userWorkEntityList) {
-            userWorkDtoList.add(UserWorkDto.toUserWorkDto(userWorkEntity));
-        }
-        return userWorkDtoList;
     }
 
     public UserWorkDto selectUserWorkForWork(WorkDto workDto) {
@@ -383,24 +371,6 @@ public class ProjectDetailSerivce {
             detailDto.setHeadIdToDetail(headRepository.findById(headId).orElse(null));
             DetailDto editDetailDto = DetailDto.toDetailDto(detailRepository.save(DetailEntity.toDetailEntity(detailDto)));
             return editDetailDto;
-        }
-        return null;
-    }
-
-    public WorkDto editWork(String title, String startDate, String deadline, String discription,
-                            Long workId, Long linkedDetailId) {
-        Optional<WorkEntity> workEntity = workRepository.findById(workId);
-        Optional<DetailEntity> detailEntity = detailRepository.findById(linkedDetailId);
-        if(workEntity.isPresent()) {
-            Date startDay = dateManager.formatter(startDate);
-            Date endDay = dateManager.formatter(deadline);
-            workEntity.get().setTitle(title);
-            workEntity.get().setStartDay(startDay);
-            workEntity.get().setEndDay(endDay);
-            workEntity.get().setDiscription(discription);
-            workEntity.get().setDetailIdToWork(detailEntity.get());
-            WorkDto workDto = WorkDto.toWorkDto(workRepository.save(workEntity.get()));
-            return workDto;
         }
         return null;
     }

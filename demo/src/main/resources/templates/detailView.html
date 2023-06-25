@@ -8,8 +8,6 @@
   <link rel="stylesheet" href="/css/goalDetail.css">
   <link rel="stylesheet" href="/css/sidebar.css">
 </head>
-<!-- 목표 > 내 목표 창-->
-
 <body>
 <div class="sidebar">
 	<ul>
@@ -60,13 +58,15 @@
           <thead>
           <tr>
             <th class="job-name">작업명</th>
+            <th>담당자</th>
             <th>기한</th>
           </tr>
           </thead>
           <tbody>
-          <tr th:each="workDto : ${workDtoList}">
-            <td><a th:href="@{/project/work/detail/{id}(id=${workDto.workId})}" th:text="${workDto.title}"></a></td>
-            <td th:text="${#dates.format(workDto.endDay, 'yyyy-MM-dd')}"></td>
+          <tr th:each="userWork : ${userWorkMap}">
+            <td><a th:href="@{/project/work/detail/{id}(id=${userWork.key.workId})}" th:text="${userWork.key.title}">작업명</a></td>
+            <td th:text="${userWork.value.name}"></td>
+            <td th:text="${#dates.format(userWork.key.endDay, 'yyyy-MM-dd')}"></td>
           </tr>
           </tbody>
         </table>

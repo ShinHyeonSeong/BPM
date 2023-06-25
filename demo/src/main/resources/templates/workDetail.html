@@ -29,7 +29,7 @@
 	<!-- BackButton 디자인 필요 -->
 	<a href="javascript:history.back(-1)" class="back-button">
 		< </a>
-	<h1 th:text="${workDto.title}"></h1>
+	<h1>작업 1</h1>
 
 </div>
 
@@ -122,8 +122,7 @@
 			
 			<div>
 				<h4 class="content-title">작업 담당자</h4>
-				<p class="content-detail"th:each="userWorkDto : ${userWorkDtoList}"
-				   th:text="${userWorkDto.userIdToUserWork.name}"></p>
+				<p class="content-detail" th:text="${userDto.name}"></p>
 				<div class="horizon-divider"></div>
 			</div>
 			<!-- 이걸 div로 해가지고 상위 목표와 연결 해야되는데 일단 내가 못함 미안 -->

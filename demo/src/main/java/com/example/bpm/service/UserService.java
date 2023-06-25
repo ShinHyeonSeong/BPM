@@ -143,7 +143,6 @@ public class UserService {
         List<UserDto> userDtos = new ArrayList<UserDto>();
         for (ProjectRoleEntity projectRoleEntity : projectRoleEntities) {
             Optional<UserEntity> userEntity = userRepository.findById(projectRoleEntity.getUuidInRole().getUuid());
-            log.info("현재 프로젝트에 속한 전체 유저 검색. " + userEntity.get().getName());
             userDtos.add(UserDto.toUserDto(userEntity.get()));
         }
         return userDtos;
