@@ -58,12 +58,6 @@
 				return false;
 			}
 			
-			if (!regMail.test(email.value)) {
-				alert("잘못된 이메일 형식입니다.")
-				email.focus();
-				return false;
-			}
-			
 			try {
 				var date = value.split("-");
 				var y = parseInt(date[0], 10),
