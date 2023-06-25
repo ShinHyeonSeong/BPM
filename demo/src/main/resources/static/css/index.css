@@ -34,7 +34,8 @@ img {
     align-items: center;
     overflow: hidden;
     color: #000;
-    margin: 10rem auto 5rem auto;
+    margin-top: 3%;
+    margin: auto;
 }
 
 .bpm-point-text {

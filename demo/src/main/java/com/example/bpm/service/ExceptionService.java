@@ -1,6 +1,5 @@
 package com.example.bpm.service;
 
-import com.example.bpm.dto.DetailDto;
 import com.example.bpm.dto.HeadDto;
 import com.example.bpm.dto.ProjectDto;
 import com.example.bpm.entity.DetailEntity;
@@ -113,26 +112,4 @@ public class ExceptionService {
         }
         return null;
     }
-
-    public String workEditErrorCheck(String startDate, String endDate, Long detailId) {
-        DetailDto detailDto = DetailDto.toDetailDto((detailRepository.findById(detailId)).orElse(null));
-
-        Date detailStartDate = detailDto.getStartDay();
-        Date detailEndDate = detailDto.getEndDay();
-
-        Date workStartDate = dateManager.formatter(startDate);
-        Date workEndDate = dateManager.formatter(endDate);
-
-        int startDateResult = workStartDate.compareTo(detailStartDate);
-        int endDateResult = workEndDate.compareTo(detailEndDate);
-
-        if(startDateResult < 0) {
-            return "상위 목표의 시작기한보다 빠릅니다.";
-        }
-        if(endDateResult > 0) {
-            return "상위 목표의 마감기한을 초과했습니다.";
-        }
-        return null;
-    }
-
 }

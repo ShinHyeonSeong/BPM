@@ -99,20 +99,20 @@
       </div>
     </div>
 
-    <div class="create-goal">
-      <div class="label-detail">
-        <label class="label" for="create-goal-input5">작업 담당자</label>
-      </div>
-      <div class="search-input-detail">
-        <ul id="create-goal-input5">
-          <li th:each="userDto : ${userDtoList}" th:object="${userDtoList}">
-            <input type="checkbox" th:id="${userDto.name}" th:name="chargeUsers" th:value="${userDto.uuid}">
-            <label th:for="${userDto.name}" th:text="${userDto.name}" class="user-label"></label>
-            <div class="check"></div>
-          </li>
-        </ul>
-      </div>
-    </div>
+<!--    <div class="create-goal">-->
+<!--      <div class="label-detail">-->
+<!--        <label class="label" for="create-goal-input5">작업 담당자</label>-->
+<!--      </div>-->
+<!--      <div class="input-detail">-->
+<!--        <div class="select">-->
+<!--          <select class="select-connection-goal" id="create-goal-input5" name="chargeUser" th:if="${userDtoList != null}">-->
+<!--            <option th:each="user : ${userDtoList}"-->
+<!--            th:text="${user.name}"-->
+<!--            th:value="${user.uuid}"></option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <div class="create-goal">
       <div class="label-detail">
