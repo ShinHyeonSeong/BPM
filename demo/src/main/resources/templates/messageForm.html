@@ -37,10 +37,10 @@
 </nav>
 
 <div class="container">
-	<h2>메세지</h2>
+	<h2>메세지 보내기</h2>
 	<form action="/sendMessage" method="post">
 		<div class="form-group">
-			<label>받는 사람 </label>
+			<label style="margin-bottom: 10px;">받는 사람 </label>
 			<div class="input-detail">
 				<div class="select">
 					<select class="select-connection-goal" id="create-goal-input6" name="recvName" th:if="${userList != null}">
